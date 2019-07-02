@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import {
 	HeaderWrapper,
 	Logo,
@@ -11,6 +13,7 @@ import {
 } from './style';
 
 class Header extends Component {
+
   render() {
     return (
       <HeaderWrapper>
@@ -23,8 +26,19 @@ class Header extends Component {
             <i className="iconfont">&#xe636;</i>
           </NavItem>
           <SearchWrapper>
-            <NavSearch></NavSearch>
-            <i className="iconfont">&#xe614;</i>
+            <CSSTransition
+                in={this.props.focused}
+                timeout={200}
+                classNames="slide"
+              >
+              <NavSearch
+                className={this.props.focused ? 'focused': ''}
+                onFocus={this.props.handleInputFocus}
+                onBlur={this.props.handleInputBlur}
+              ></NavSearch>
+              </CSSTransition>
+              <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>
+              &#xe614;</i>
           </SearchWrapper>
         </Nav>
         <Addition>
@@ -39,4 +53,28 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+	return {
+		focused: state.focused
+	}
+}
+
+const mapDispathToProps = (dispatch) => {
+  return {
+    handleInputFocus() {
+      const action = {
+        type: 'search_focus'
+      };
+      dispatch(action)
+    },
+
+    handleInputBlur() {
+      const action = {
+        type: 'search_blur'
+      };
+      dispatch(action)
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(Header);
