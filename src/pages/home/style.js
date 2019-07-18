@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import vipIcon from '../../statics/banner-vip.png';
+import selectIcon from '../../statics/banner-select.png';
 
 export const HomeWrapper = styled.div`
 	overflow: hidden;
@@ -84,10 +86,18 @@ export const RecommendWrapper = styled.div`
 	width: 280px;
 `;
 
-export const RecommendItem = styled.div`
+export const RecommendVipItem = styled.div`
 	width: 280px;
 	height: 50px;
-	background: url(${(props) => props.imgUrl});
+	// background: url(${(props) => props.imgUrl});
+	background: url(${vipIcon});
+	background-size: contain;
+`;
+
+export const RecommendSelectItem = styled.div`
+	width: 280px;
+	height: 50px;
+	background: url(${selectIcon});
 	background-size: contain;
 `;
 
